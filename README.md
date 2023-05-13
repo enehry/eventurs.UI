@@ -6,8 +6,9 @@ A web app for attendance tracking at events this the front-end of the app. It us
 
 ### Authors
 
-- John Nehry Dedoro
+- Nehry Dedoro
 - Mon Albert Gamil
+- Nelson Arabit
 
 ### Adviser
 
