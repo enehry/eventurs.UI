@@ -11,14 +11,14 @@
       </div>
 
       <form action="" class="space-y-5">
-        <Input type="text" placeholder="Username" />
-        <Input type="password" placeholder="Password" />
+        <DefaultInput type="text" placeholder="Username" />
+        <DefaultInput type="password" placeholder="Password" />
 
         <div class="flex justify-end">
           <p class="text-sm text-[#595959] cursor-pointer">Forgot password?</p>
         </div>
 
-        <Button>Sign in</Button>
+        <default-button>Sign in</default-button>
       </form>
 
       <div class="flex items-center my-4">
@@ -41,6 +41,6 @@
 </template>
 
 <script setup>
-import Input from '../components/Input.vue'
-import Button from '../components/Button.vue'
+import DefaultInput from '@/components/DefaultInput.vue'
+import DefaultButton from '@/components/DefaultButton.vue'
 </script>
