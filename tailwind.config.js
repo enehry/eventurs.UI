@@ -8,6 +8,15 @@ export default {
     },
     height: {
       screen: '100dvh'
+    },
+    extend: {
+      colors: {
+        primary: '#2C74B3',
+        secondary: '#595959',
+        cardBg: '#EEEEEE',
+        blackText: '#000000',
+        whiteText: '#FFFFFF'
+      }
     }
   },
   plugins: []
