@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center min-h-screen">
-    <img src="@/assets/logo/LOGO.svg" alt="logo" />
+    <img src="@/assets/icons/LOGO.svg" alt="logo" />
     <p class="text-secondary text-sm">Streamline Your Events with Eventurs</p>
 
     <div
@@ -29,8 +29,8 @@
       </div>
 
       <div class="flex justify-center space-x-8">
-        <img src="@/assets/googleLogo.svg" alt="google" class="cursor-pointer" />
-        <img src="@/assets/facebookLogo.svg" alt="facebook" class="cursor-pointer" />
+        <img src="@/assets/icons/googleLogo.svg" alt="google" class="cursor-pointer" />
+        <img src="@/assets/icons/facebookLogo.svg" alt="facebook" class="cursor-pointer" />
       </div>
 
       <p class="text-center text-secondary text-sm">

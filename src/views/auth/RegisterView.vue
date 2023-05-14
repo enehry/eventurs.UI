@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center min-h-screen">
-    <img src="@/assets/logo/LOGO.svg" alt="logo" />
+    <img src="@/assets/icons/LOGO.svg" alt="logo" />
     <p class="text-secondary text-sm">Streamline Your Events with Eventurs</p>
 
     <div
