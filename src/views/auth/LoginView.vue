@@ -1,16 +1,17 @@
 <template>
   <div class="flex flex-col justify-center items-center min-h-screen">
-    <img src="@/assets/logo/LOGO.svg" alt="logo" />
+    <img src="@/assets/icons/LOGO.svg" alt="logo" />
     <p class="text-secondary text-sm">Streamline Your Events with Eventurs</p>
+
     <div
-      class="bg-cardBg rounded-2xl w-11/12 md:w-[400px] p-6 md:p-[60px] space-y-5 mt-8 md:mt-11 shadow-md shadow-gray-400"
+      class="bg-cardBg rounded-2xl w-11/12 sm:w-[400px] p-6 sm:p-[60px] space-y-5 mt-8 sm:mt-11 shadow-md shadow-gray-400"
     >
       <div>
         <h3 class="text-blackText font-medium text-lg md:text-xl">Hello, Welcome!</h3>
         <p class="text-secondary text-sm">Please sign in to continue</p>
       </div>
 
-      <form action="" class="space-y-5">
+      <form action="" class="space-y-3 sm:space-y-5">
         <DefaultInput type="text" placeholder="Username" />
         <DefaultInput type="password" placeholder="Password" />
 
@@ -28,8 +29,8 @@
       </div>
 
       <div class="flex justify-center space-x-8">
-        <img src="@/assets/googleLogo.svg" alt="google" class="cursor-pointer" />
-        <img src="@/assets/facebookLogo.svg" alt="facebook" class="cursor-pointer" />
+        <img src="@/assets/icons/googleLogo.svg" alt="google" class="cursor-pointer" />
+        <img src="@/assets/icons/facebookLogo.svg" alt="facebook" class="cursor-pointer" />
       </div>
 
       <p class="text-center text-secondary text-sm">
