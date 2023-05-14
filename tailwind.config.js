@@ -15,7 +15,8 @@ export default {
         secondary: '#595959',
         cardBg: '#EEEEEE',
         blackText: '#000000',
-        whiteText: '#FFFFFF'
+        whiteText: '#FFFFFF',
+        darkBlue: '#1d5b90'
       }
     }
   },
