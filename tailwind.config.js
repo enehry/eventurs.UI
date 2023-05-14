@@ -3,13 +3,13 @@ export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
-    fontFamily: {
-      sans: ['Source Sans Pro', 'sans-serif']
-    },
-    height: {
-      screen: '100dvh'
-    },
     extend: {
+      fontFamily: {
+        sans: ['Source Sans Pro', 'sans-serif']
+      },
+      height: {
+        screen: '100dvh'
+      },
       colors: {
         primary: '#2C74B3',
         secondary: '#595959',

@@ -1,5 +1,5 @@
 <template>
-  <input :type="type" :placeholder="placeholder" class="login-input" />
+  <input :type="props.type" :placeholder="props.placeholder" class="login-input" />
 </template>
 
 <script setup>
