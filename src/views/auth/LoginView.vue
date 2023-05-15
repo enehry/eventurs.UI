@@ -35,7 +35,9 @@
 
       <p class="text-center text-secondary text-sm">
         Don't have an account?
-        <span class="text-primary font-bold cursor-pointer">Register</span>
+        <span class="text-primary font-bold cursor-pointer hover:underline underline-offset-2"
+          >Register</span
+        >
       </p>
     </div>
   </div>
