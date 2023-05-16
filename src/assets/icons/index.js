@@ -1,0 +1,5 @@
+export { default as HomeIcon } from './HomeIcon.vue'
+export { default as StarIcon } from './StarIcon.vue'
+export { default as CalendarIcon } from './CalendarIcon.vue'
+export { default as CogSixToothIcon } from './CogSixToothIcon.vue'
+export { default as RArrowFilledIcon } from './RArrowFilledIcon.vue'
