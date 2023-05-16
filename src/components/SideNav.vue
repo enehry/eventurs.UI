@@ -4,19 +4,23 @@ import { HomeIcon, StarIcon, CalendarIcon, CogSixToothIcon } from '@/assets/icon
 const navLinks = [
   {
     icon: HomeIcon,
-    name: 'Dashboard'
+    name: 'Dashboard',
+    route: 'dashboard'
   },
   {
     icon: StarIcon,
-    name: 'Events'
+    name: 'Events',
+    route: 'events'
   },
   {
     icon: CalendarIcon,
-    name: 'Calendar'
+    name: 'Calendar',
+    route: 'calendar'
   },
   {
     icon: CogSixToothIcon,
-    name: 'Settings'
+    name: 'Settings',
+    route: 'settings'
   }
 ]
 </script>
@@ -30,16 +34,18 @@ const navLinks = [
       <h2 class="font-bold text-secondary">Menu</h2>
       <hr class="bg-cardBg h-1.5 rounded-full" />
       <div v-for="navLink in navLinks">
-        <NavLink :key="navLink.name" :navLinkName="navLink.name">
+        <NavLink :key="navLink.name" :name="navLink.name" :route="navLink.route">
           <component :is="navLink.icon" />
         </NavLink>
       </div>
     </div>
     <div class="flex gap-3 justify-start items-center">
-      <div
-        class="h-[50px] w-[50px] p-0.5 flex-shrink-0 rounded-full shadow border overflow-hidden"
-      >
-        <img class="object-cover rounded-full w-full h-full" src="@/assets/images/default_profile.png" alt="user_profile" />
+      <div class="h-[50px] w-[50px] p-0.5 flex-shrink-0 rounded-full shadow border overflow-hidden">
+        <img
+          class="object-cover rounded-full w-full h-full"
+          src="@/assets/images/default_profile.png"
+          alt="user_profile"
+        />
       </div>
       <div>
         <button class="font-bold text-black">Student Name</button>
