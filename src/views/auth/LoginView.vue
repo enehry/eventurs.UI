@@ -11,15 +11,34 @@
         <p class="text-secondary text-sm">Please sign in to continue</p>
       </div>
 
-      <form action="" class="space-y-3 sm:space-y-5">
-        <DefaultInput type="text" placeholder="Username" />
-        <DefaultInput type="password" placeholder="Password" />
+      <form @submit="onSubmit">
+        <DefaultInput
+          name="email"
+          type="email"
+          placeholder="Email"
+          :modelValue="email"
+          @update:modelValue="(newEmail) => (email = newEmail)"
+          :errorBorder="errors.email ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+        />
+        <span v-show="errors.email" class="text-xs ml-1 text-red-700">{{ errors.email }}</span>
 
-        <div class="flex justify-end">
+        <DefaultInput
+          name="password"
+          type="password"
+          placeholder="Password"
+          :modelValue="password"
+          @update:modelValue="(newPassword) => (password = newPassword)"
+          :errorBorder="errors.password ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+        />
+        <span v-show="errors.password" class="text-xs ml-1 text-red-700">{{
+          errors.password
+        }}</span>
+
+        <div class="flex justify-end mb-5">
           <p class="text-sm text-secondary cursor-pointer">Forgot password?</p>
         </div>
 
-        <DefaultButton>Sign in</DefaultButton>
+        <DefaultButton class="mb-5">Sign in</DefaultButton>
       </form>
 
       <div class="flex items-center my-5">
@@ -46,4 +65,34 @@
 <script setup>
 import DefaultButton from '@/components/DefaultButton.vue'
 import DefaultInput from '@/components/DefaultInput.vue'
+import { useField, useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import * as zod from 'zod'
+
+const validationSchema = toTypedSchema(
+  zod.object({
+    email: zod
+      .string()
+      .nonempty('Email is required')
+      .min(8, { message: 'Email must atleast 8 characters.' })
+      .email({ message: 'Invalid email format.' })
+      .regex(/[a-zA-Z]/, { message: 'Email must contain at least one letter.' })
+      .regex(/\d/, { message: 'Email must contain at least one number.' }),
+    password: zod
+      .string()
+      .nonempty('Password is required')
+      .min(8, { message: 'Password must atleast 8 characters.' })
+  })
+)
+
+const { handleSubmit, errors } = useForm({
+  validationSchema
+})
+
+const { value: email } = useField('email')
+const { value: password } = useField('password')
+
+const onSubmit = handleSubmit((values) => {
+  alert(JSON.stringify(values, null, 2))
+})
 </script>

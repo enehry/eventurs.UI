@@ -11,27 +11,114 @@
         <p class="text-secondary text-sm">Please fill up necessary requirements to proceed.</p>
       </div>
 
-      <form action="" class="space-y-3 md:space-y-5">
+      <form @submit="onSubmit">
         <div
-          class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 sm:space-x-3 md:space-x-5"
+          class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-x-3 md:space-x-5"
         >
-          <DefaultInput type="text" placeholder="First Name" class="md:w-4/12" />
-          <DefaultInput type="text" placeholder="Middle Name" class="md:w-4/12" />
-          <DefaultInput type="text" placeholder="Last Name" class="md:w-4/12" />
+          <div class="md:w-4/12">
+            <DefaultInput
+              name="firstName"
+              type="text"
+              placeholder="First Name"
+              :modelValue="firstName"
+              @update:modelValue="(newFirstName) => (firstName = newFirstName)"
+              :errorBorder="
+                errors.firstName ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'
+              "
+            />
+            <span v-show="errors.firstName" class="text-xs ml-1 text-red-700">{{
+              errors.firstName
+            }}</span>
+          </div>
+          <div class="md:w-4/12">
+            <DefaultInput
+              name="middleName"
+              type="text"
+              placeholder="Middle Name"
+              :modelValue="middleName"
+              @update:modelValue="(newMiddleName) => (middleName = newMiddleName)"
+              :errorBorder="
+                errors.middleName ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'
+              "
+            />
+            <span v-show="errors.middleName" class="text-xs ml-1 text-red-700">{{
+              errors.middleName
+            }}</span>
+          </div>
+          <div class="md:w-4/12">
+            <DefaultInput
+              name="lastName"
+              type="text"
+              placeholder="Last Name"
+              :modelValue="lastName"
+              @update:modelValue="(newLastName) => (lastName = newLastName)"
+              :errorBorder="errors.lastName ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+            />
+            <span v-show="errors.lastName" class="text-xs ml-1 text-red-700">{{
+              errors.lastName
+            }}</span>
+          </div>
         </div>
 
         <div
-          class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 sm:space-x-3 md:space-x-5"
+          class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-x-3 md:space-x-5"
         >
-          <DefaultInput type="email" placeholder="Email" class="md:w-6/12" />
-          <DefaultInput type="tel" placeholder="Contact Number" class="md:w-6/12" />
+          <div class="md:w-6/12">
+            <DefaultInput
+              name="email"
+              type="email"
+              placeholder="Email"
+              :modelValue="email"
+              @update:modelValue="(newEmail) => (email = newEmail)"
+              :errorBorder="errors.email ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+            />
+            <span v-show="errors.email" class="text-xs ml-1 text-red-700">{{ errors.email }}</span>
+          </div>
+          <div class="md:w-6/12">
+            <DefaultInput
+              name="contactNo"
+              type="tel"
+              placeholder="Contact Number"
+              :modelValue="contactNo"
+              @update:modelValue="(newContactNo) => (contactNo = newContactNo)"
+              :errorBorder="
+                errors.contactNo ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'
+              "
+            />
+            <span v-show="errors.contactNo" class="text-xs ml-1 text-red-700">{{
+              errors.contactNo
+            }}</span>
+          </div>
         </div>
 
-        <DefaultInput type="password" placeholder="Password" />
-        <DefaultInput type="password" placeholder="Retype Password" />
+        <DefaultInput
+          name="password"
+          type="password"
+          placeholder="Password"
+          :modelValue="password"
+          @update:modelValue="(newPassword) => (password = newPassword)"
+          :errorBorder="errors.password ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+        />
+        <span v-show="errors.password" class="text-xs ml-1 text-red-700">{{
+          errors.password
+        }}</span>
+
+        <DefaultInput
+          name="confirmPassword"
+          type="password"
+          placeholder="Retype Password"
+          :modelValue="confirmPassword"
+          @update:modelValue="(newConfirmPassword) => (confirmPassword = newConfirmPassword)"
+          :errorBorder="
+            errors.confirmPassword ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'
+          "
+        />
+        <span v-show="errors.confirmPassword" class="text-xs ml-1 text-red-700">{{
+          errors.confirmPassword
+        }}</span>
 
         <div class="grid justify-items-center">
-          <DefaultButton class="sm:w-[280px] place-self-center">Sign Up</DefaultButton>
+          <DefaultButton class="sm:w-[280px] place-self-center mt-3">Sign Up</DefaultButton>
         </div>
       </form>
     </div>
@@ -41,4 +128,70 @@
 <script setup>
 import DefaultInput from '@/components/DefaultInput.vue'
 import DefaultButton from '@/components/DefaultButton.vue'
+import { useField, useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import * as zod from 'zod'
+
+const validationSchema = toTypedSchema(
+  zod.object({
+    firstName: zod
+      .string()
+      .nonempty('First name is required.')
+      .min(2, 'First name must be at least 2 characters.')
+      .max(50, 'First name must not exceed 50 characters.')
+      .regex(/^[A-Za-z]+$/, 'First name should only contain letters.'),
+    middleName: zod
+      .string()
+      .min(2, 'Middle name require 2 characters.')
+      .max(50, 'Middle name must not exceed 50 characters.')
+      .regex(/^[A-Za-z]+$/, 'Middle name should only contain letters.'),
+    lastName: zod
+      .string()
+      .nonempty('Last name is required.')
+      .min(2, 'Last name must be at least 2 characters.')
+      .max(50, 'Last name must not exceed 50 characters.')
+      .regex(/^[A-Za-z]+$/, 'Last name should only contain letters.'),
+    contactNo: zod
+      .string()
+      .nonempty('Contact number is required.')
+      .regex(/^\d+$/, {
+        message: 'Contact number should contain only numbers.'
+      })
+      .length(11, { message: 'Contact number must be 11 digits.' }),
+    email: zod
+      .string()
+      .nonempty('Email is required')
+      .min(8, { message: 'Email must atleast 8 characters.' })
+      .email({ message: 'Invalid email format.' })
+      .regex(/[a-zA-Z]/, { message: 'Email must contain at least one letter.' })
+      .regex(/\d/, { message: 'Email must contain at least one number.' }),
+    password: zod
+      .string()
+      .nonempty('Password is required')
+      .min(8, { message: 'Password must be at least 8 characters.' }),
+    confirmPassword: zod
+      .string()
+      .nonempty('Confirm password is required.')
+      .refine((value) => value === password.value, {
+        message: 'Passwords do not match.',
+        path: ['confirmPassword']
+      })
+  })
+)
+
+const { handleSubmit, errors } = useForm({
+  validationSchema
+})
+
+const { value: firstName } = useField('firstName')
+const { value: middleName } = useField('middleName')
+const { value: lastName } = useField('lastName')
+const { value: contactNo } = useField('contactNo')
+const { value: email } = useField('email')
+const { value: password } = useField('password')
+const { value: confirmPassword } = useField('confirmPassword')
+
+const onSubmit = handleSubmit((values) => {
+  alert(JSON.stringify(values, null, 2))
+})
 </script>
