@@ -1,6 +1,7 @@
 <script setup>
 import NavLink from '@/components/SideNavLink.vue'
 import { HomeIcon, StarIcon, CalendarIcon, CogSixToothIcon } from '@/assets/icons'
+
 const navLinks = [
   {
     icon: HomeIcon,
@@ -26,7 +27,9 @@ const navLinks = [
 </script>
 
 <template>
-  <div class="flex flex-col px-6 py-5 justify-between ml-2 my-3.5 shadow-lg rounded-3xl bg-white">
+  <div
+    class="flex flex-col px-6 py-5 w-[274px] flex-shrink-0 justify-between ml-2 my-3.5 shadow-lg rounded-[30px] bg-white"
+  >
     <div class="flex flex-col gap-5">
       <div class="px-10">
         <img src="@/assets/icons/LOGO.svg" alt="eventurs_logo" />
