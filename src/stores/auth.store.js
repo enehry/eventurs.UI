@@ -11,7 +11,9 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(email, password) {
     const res = await AuthService.login({ email, password })
     const { access_token, current_user } = res.data
+
     setCredentials(access_token, current_user)
+
     if (!access_token || !current_user) {
       return
     }

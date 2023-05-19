@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-// create a props is loading
 const props = defineProps({
   isLoading: {
     type: Boolean,
@@ -18,14 +17,14 @@ const props = defineProps({
   }
 })
 
-// create a function to check if the button is loading
+// check if the button is loading
 const isLoading = () => {
   if (props.isLoading) {
     return 'cursor-not-allowed'
   }
 }
 
-// create a function to check if the button is loading
+// check if the button is loading
 const isDisabled = () => {
   if (props.isLoading) {
     return true
