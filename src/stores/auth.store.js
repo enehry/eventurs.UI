@@ -1,24 +1,31 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { getCredentials, setCredentials } from '../helper/LocalStorage'
+import router from '../router'
 import AuthService from '../service/AuthService'
 
-export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    token: JSON.parse(localStorage.getItem('token')),
-    user: JSON.parse(localStorage.getItem('user'))
-  }),
-  getters: {
-    isAuthenticated: (state) => !!state.token
-  },
-  actions: {
-    login: async (email, password) => {
-      const res = await AuthService.login({ email, password })
-      const { access_token, current_user } = res.data
+export const useAuthStore = defineStore('auth', () => {
+  const { token, user } = getCredentials()
+  const isLoading = ref(false)
 
-      this.token = access_token
-      this.user = current_user
-
-      localStorage.setItem('token', JSON.stringify(access_token))
-      localStorage.setItem('user', JSON.stringify(current_user))
+  async function login(email, password) {
+    const res = await AuthService.login({ email, password })
+    const { access_token, current_user } = res.data
+    setCredentials(access_token, current_user)
+    if (!access_token || !current_user) {
+      return
     }
+    // redirect to the dashboard
+    router.push({ name: 'dashboard' })
+  }
+
+  const isAuthenticated = () => !!token && !!user
+
+  return {
+    login,
+    isAuthenticated,
+    isLoading,
+    token,
+    user
   }
 })

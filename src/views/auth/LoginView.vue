@@ -10,7 +10,9 @@
         <h3 class="text-blackText font-medium text-lg md:text-xl">Hello, Welcome!</h3>
         <p class="text-secondary text-sm">Please sign in to continue</p>
       </div>
-
+      <div v-if="errorStore.hasErrors">
+        <p class="text-red-700 text-sm">{{ errorStore.state.message }}</p>
+      </div>
       <form @submit="onSubmit">
         <DefaultInput
           name="email"
@@ -18,7 +20,7 @@
           placeholder="Email"
           :modelValue="email"
           @update:modelValue="(newEmail) => (email = newEmail)"
-          :errorBorder="errors.email ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+          :errorBorder="getErrorBorder('email')"
         />
         <span v-show="errors.email" class="text-xs ml-1 text-red-700">{{ errors.email }}</span>
 
@@ -28,7 +30,7 @@
           placeholder="Password"
           :modelValue="password"
           @update:modelValue="(newPassword) => (password = newPassword)"
-          :errorBorder="errors.password ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+          :errorBorder="getErrorBorder('password')"
         />
         <span v-show="errors.password" class="text-xs ml-1 text-red-700">{{
           errors.password
@@ -38,7 +40,9 @@
           <p class="text-sm text-secondary cursor-pointer">Forgot password?</p>
         </div>
 
-        <DefaultButton class="mb-5">Sign in</DefaultButton>
+        <DefaultButton :isLoading="loadingStore.state.status === 'loading'" class="mb-5"
+          >Sign in</DefaultButton
+        >
       </form>
 
       <div class="flex items-center my-5">
@@ -68,6 +72,13 @@ import DefaultInput from '@/components/DefaultInput.vue'
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as zod from 'zod'
+import { useAuthStore } from '../../stores/auth.store'
+import { useErrorStore } from '../../stores/error.store'
+import { useLoadingStore } from '../../stores/loading.store'
+
+const authStore = useAuthStore()
+const errorStore = useErrorStore()
+const loadingStore = useLoadingStore()
 
 const validationSchema = toTypedSchema(
   zod.object({
@@ -75,9 +86,10 @@ const validationSchema = toTypedSchema(
       .string()
       .nonempty('Email is required')
       .min(8, { message: 'Email must atleast 8 characters.' })
-      .email({ message: 'Invalid email format.' })
-      .regex(/[a-zA-Z]/, { message: 'Email must contain at least one letter.' })
-      .regex(/\d/, { message: 'Email must contain at least one number.' }),
+      .email({ message: 'Invalid email format.' }),
+    // email validation is enough
+    // .regex(/[a-zA-Z]/, { message: 'Email must contain at least one letter.' })
+    // .regex(/\d/, { message: 'Email must contain at least one number.' }),
     password: zod
       .string()
       .nonempty('Password is required')
@@ -92,7 +104,13 @@ const { handleSubmit, errors } = useForm({
 const { value: email } = useField('email')
 const { value: password } = useField('password')
 
-const onSubmit = handleSubmit((values) => {
-  alert(JSON.stringify(values, null, 2))
+const onSubmit = handleSubmit(({ email, password }) => {
+  authStore.login(email, password)
 })
+
+function getErrorBorder(inputName) {
+  return errors.value[inputName]
+    ? 'focus:ring-red-700 mb-0 border-red-700'
+    : 'focus:ring-primary mb-5'
+}
 </script>
