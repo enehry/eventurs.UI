@@ -20,7 +20,7 @@
           placeholder="Email"
           :modelValue="email"
           @update:modelValue="(newEmail) => (email = newEmail)"
-          :errorBorder="errors.email ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+          :errorBorder="getErrorBorder('email')"
         />
         <span v-show="errors.email" class="text-xs ml-1 text-red-700">{{ errors.email }}</span>
 
@@ -30,7 +30,7 @@
           placeholder="Password"
           :modelValue="password"
           @update:modelValue="(newPassword) => (password = newPassword)"
-          :errorBorder="errors.password ? 'focus:ring-red-700 mb-0' : 'focus:ring-primary mb-5'"
+          :errorBorder="getErrorBorder('password')"
         />
         <span v-show="errors.password" class="text-xs ml-1 text-red-700">{{
           errors.password
@@ -107,4 +107,10 @@ const { value: password } = useField('password')
 const onSubmit = handleSubmit(({ email, password }) => {
   authStore.login(email, password)
 })
+
+function getErrorBorder(inputName) {
+  return errors.value[inputName]
+    ? 'focus:ring-red-700 mb-0 border-red-700'
+    : 'focus:ring-primary mb-5'
+}
 </script>

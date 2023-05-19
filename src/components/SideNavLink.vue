@@ -17,7 +17,7 @@ const handleClick = () => {
 <template>
   <button
     @click="handleClick"
-    :class="`flex justify-start items-center gap-5 w-full ${
+    :class="`flex justify-start items-center gap-5 w-full truncate ${
       route.name !== props.route ? 'hover:text-blue-500 hover:pl-2.5 duration-100' : ''
     }`"
   >

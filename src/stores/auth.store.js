@@ -5,7 +5,7 @@ import router from '../router'
 import AuthService from '../service/AuthService'
 
 export const useAuthStore = defineStore('auth', () => {
-  const { token, user } = getCredentials()
+  const credentials = ref(getCredentials())
   const isLoading = ref(false)
 
   async function login(email, password) {
@@ -17,17 +17,21 @@ export const useAuthStore = defineStore('auth', () => {
     if (!access_token || !current_user) {
       return
     }
+
+    //update credentials
+    credentials.value.token = access_token
+    credentials.value.user = current_user
+
     // redirect to the dashboard
     router.push({ name: 'dashboard' })
   }
 
-  const isAuthenticated = () => !!token && !!user
+  const isAuthenticated = () => !!credentials.value.token && !!credentials.value.user
 
   return {
     login,
     isAuthenticated,
     isLoading,
-    token,
-    user
+    credentials
   }
 })

@@ -30,6 +30,7 @@
 <script setup>
 import NavLink from '@/components/SideNavLink.vue'
 import { HomeIcon, StarIcon, CalendarIcon, CogSixToothIcon } from '@/assets/icons'
+
 const navLinks = [
   {
     icon: HomeIcon,
