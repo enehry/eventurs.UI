@@ -184,6 +184,8 @@ const { value: password } = useField('password')
 const { value: confirmPassword } = useField('confirmPassword')
 
 const onSubmit = handleSubmit((values) => {
+  //TODO: implement the registration logic here use the authStore
+
   alert(JSON.stringify(values, null, 2))
 })
 
