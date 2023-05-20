@@ -17,12 +17,21 @@ const handleClick = () => {
 <template>
   <button
     @click="handleClick"
-    :class="`flex justify-start items-center gap-5 w-full truncate ${
+    :class="`w-full truncate ${
       route.name !== props.route ? 'hover:text-blue-500 hover:pl-2.5 duration-100' : ''
     }`"
   >
-    <RArrowFilledIcon v-if="route.name === props.route" class="h-[30px] w-[30px] inline-block" />
-    <slot><!-- icon component --></slot>
-    <p>{{ props.name }}</p>
+    <div class="flex justify-center items-center gap-5">
+      <div class="flex justify-start gap-5 w-24 relative">
+        <RArrowFilledIcon
+          v-if="route.name === props.route"
+          class="inline-block absolute -left-10"
+        />
+        <slot>
+          <!-- icon component -->
+        </slot>
+        <p>{{ props.name }}</p>
+      </div>
+    </div>
   </button>
 </template>

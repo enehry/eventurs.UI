@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col px-6 py-5 justify-between ml-2 my-3.5 shadow-lg rounded-3xl bg-white">
+  <div class="flex flex-col px-6 py-5 w-64 flex-shrink-0 justify-between ml-2 my-3.5 shadow-lg rounded-3xl bg-white">
     <div class="flex flex-col gap-5">
-      <div class="px-10">
+      <div class="px-10 flex justify-center">
         <img src="@/assets/icons/LOGO.svg" alt="eventurs_logo" />
       </div>
       <h2 class="font-bold text-secondary">Menu</h2>
@@ -20,16 +20,16 @@
           alt="user_profile"
         />
       </div>
-      <div>
-        <button class="font-bold text-black">Student Name</button>
-        <button class="text-sm">View Profile</button>
+      <div class="text-start">
+        <button class="block font-bold text-black">Student Name</button>
+        <button class="block text-sm">View Profile</button>
       </div>
     </div>
   </div>
 </template>
 <script setup>
 import NavLink from '@/components/SideNavLink.vue'
-import { HomeIcon, StarIcon, CalendarIcon, CogSixToothIcon } from '@/assets/icons'
+import { HomeIcon, StarIcon, CalendarIcon, CogSixToothIcon } from '@/components/icons'
 
 const navLinks = [
   {
