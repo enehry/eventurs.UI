@@ -11,7 +11,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
 defineEmits(['update:modelValue'])
 const props = defineProps({
   name: {
