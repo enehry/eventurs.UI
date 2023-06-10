@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="`flex flex-col absolute left-0 w-full h-screen px-6 py-5 justify-between shadow-lg bg-white ease-in delay-200 duration-300 overflow-hidden ${
-      !navToggle && 'h-20'
+    :class="`flex flex-col absolute left-0 w-full px-6 py-5 justify-between shadow-lg bg-white ease-in delay-200 duration-300 overflow-hidden ${
+      !navToggle ? 'h-20' : 'h-screen'
     }`"
   >
     <div class="flex flex-col gap-5 delay-200 duration-150">
