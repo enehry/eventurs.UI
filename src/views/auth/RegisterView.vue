@@ -11,6 +11,10 @@
         <p class="text-secondary text-sm">Please fill up necessary requirements to proceed.</p>
       </div>
 
+      <div v-if="errorStore.hasErrors">
+        <p class="text-red-700 text-sm">{{ errorStore.state.message }}</p>
+      </div>
+
       <form @submit="onSubmit">
         <div
           class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-x-3 md:space-x-5"
@@ -110,7 +114,11 @@
         }}</span>
 
         <div class="grid justify-items-center">
-          <DefaultButton class="sm:w-[280px] place-self-center mt-3">Sign Up</DefaultButton>
+          <DefaultButton
+            :isLoading="loadingStore.state.status === 'loading'"
+            class="sm:w-[280px] place-self-center mt-3"
+            >Sign Up</DefaultButton
+          >
         </div>
       </form>
     </div>
@@ -123,6 +131,13 @@ import DefaultButton from '@/components/DefaultButton.vue'
 import { useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as zod from 'zod'
+import { useAuthStore } from '../../stores/auth.store'
+import { useErrorStore } from '../../stores/error.store'
+import { useLoadingStore } from '../../stores/loading.store'
+
+const authStore = useAuthStore()
+const errorStore = useErrorStore()
+const loadingStore = useLoadingStore()
 
 const validationSchema = toTypedSchema(
   zod.object({
@@ -131,18 +146,18 @@ const validationSchema = toTypedSchema(
       .nonempty('First name is required.')
       .min(2, 'First name must be at least 2 characters.')
       .max(50, 'First name must not exceed 50 characters.')
-      .regex(/^[A-Za-z]+$/, 'First name should only contain letters.'),
+      .regex(/^[A-Za-z ]+$/, 'First name should only contain letters.'),
     middleName: zod
       .string()
       .min(2, 'Middle name require 2 characters.')
       .max(50, 'Middle name must not exceed 50 characters.')
-      .regex(/^[A-Za-z]+$/, 'Middle name should only contain letters.'),
+      .regex(/^[A-Za-z ]+$/, 'Middle name should only contain letters.'),
     lastName: zod
       .string()
       .nonempty('Last name is required.')
       .min(2, 'Last name must be at least 2 characters.')
       .max(50, 'Last name must not exceed 50 characters.')
-      .regex(/^[A-Za-z]+$/, 'Last name should only contain letters.'),
+      .regex(/^[A-Za-z ]+$/, 'Last name should only contain letters.'),
     contactNo: zod
       .string()
       .nonempty('Contact number is required.')
@@ -183,11 +198,14 @@ const { value: email } = useField('email')
 const { value: password } = useField('password')
 const { value: confirmPassword } = useField('confirmPassword')
 
-const onSubmit = handleSubmit((values) => {
-  //TODO: implement the registration logic here use the authStore
+const onSubmit = handleSubmit(
+  ({ firstName, middleName, lastName, email, password, confirmPassword }) => {
+    //TODO: implement the registration logic here use the authStore
+    const fullName = `${firstName} ${middleName.charAt(0)}. ${lastName}`
 
-  alert(JSON.stringify(values, null, 2))
-})
+    authStore.register(fullName, email, password, confirmPassword)
+  }
+)
 
 function getErrorBorder(inputName) {
   return errors.value[inputName]

@@ -58,7 +58,9 @@
 
       <p class="text-center text-secondary text-sm">
         Don't have an account?
-        <span class="text-primary font-bold cursor-pointer hover:underline underline-offset-2"
+        <span
+          @click="router.push({ name: 'register' })"
+          class="text-primary font-bold cursor-pointer hover:underline underline-offset-2"
           >Register</span
         >
       </p>
@@ -75,11 +77,12 @@ import * as zod from 'zod'
 import { useAuthStore } from '../../stores/auth.store'
 import { useErrorStore } from '../../stores/error.store'
 import { useLoadingStore } from '../../stores/loading.store'
+import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
 const errorStore = useErrorStore()
 const loadingStore = useLoadingStore()
-
+const router = useRouter()
 const validationSchema = toTypedSchema(
   zod.object({
     email: zod

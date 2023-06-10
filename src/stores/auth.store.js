@@ -35,6 +35,33 @@ export const useAuthStore = defineStore('auth', () => {
     //TODO:  update credentials
     //TODO: set the credentials using setCredentials
     //TODO:  if the registration is successful redirect to dashboard
+    try {
+      const res = await AuthService.register({ name, email, password, password_confirmation })
+      const { access_token, current_user } = res.data
+
+      if (!access_token || !current_user) {
+        return
+      }
+
+      setCredentials(access_token, current_user)
+
+      //update credentials
+      credentials.value.token = access_token
+      credentials.value.user = current_user
+
+      // redirect to the dashboard
+      router.push({ name: 'dashboard' })
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        // Handle validation errors
+        const validationErrors = error.response.data.errors
+        // Do something with the validation errors (e.g., display them to the user)
+        console.log(validationErrors)
+      } else {
+        // Handle other types of errors
+        // Display a generic error message or perform any necessary actions
+      }
+    }
   }
 
   async function logout() {}
@@ -43,6 +70,7 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     isAuthenticated,
     logout,
+    register,
     isLoading,
     credentials
   }
